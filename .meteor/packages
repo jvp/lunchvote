@@ -12,5 +12,6 @@ underscore
 coffeescript
 iron:router
 sacha:spin
-multiply:iron-router-progress
 mrt:cron
+mrt:jquery-masonry
+mrt:jquery-imagesloaded@0.0.2

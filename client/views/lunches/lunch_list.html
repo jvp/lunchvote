@@ -1,0 +1,14 @@
+<template name="lunchList">
+  <div id="lunches">
+    {{#each lunches}}
+    <div class="lunch">
+      {{#if currentUser}}
+        <a href="#" class="upvote {{upvoteClass}}">▲</a>
+      {{/if}}
+      <img src="/images/{{image}}">
+    </div>
+    {{else}}
+    <p>d'oh, eihän täällä ole mitään äänestettävää</p>
+    {{/each}}
+  </div>
+</template>

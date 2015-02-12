@@ -8,4 +8,4 @@ Router.configure
     ]
 
 Router.map ->
-  @route 'lunches', path: '/'
+  @route 'lunchList', path: '/'

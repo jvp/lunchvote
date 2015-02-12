@@ -26,7 +26,6 @@ Meteor.methods
       if restaurant
         restaurantId = restaurant._id
       else
-        console.log 'inserting restaurant: ' + restaurantName
         restaurantId = Restaurants.insert {name: restaurantName, votes: 0}
         restaurant = Restaurants.findOne restaurantId
 
@@ -41,5 +40,5 @@ Meteor.methods
       }
 
 cron = new Meteor.Cron
-  events: { '*/30 * * * *': Meteor.call 'getFiles' }
+  events: { '*/15 * * * *': Meteor.call 'getFiles' }
 
