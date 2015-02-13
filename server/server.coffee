@@ -39,16 +39,12 @@ Meteor.methods
     if !lunch
       throw new Meteor.Error(422, "Lunch not found")
 
-    console.log lunch.votes
-
     lunch.$update
       $set:
         voted: true
         votes: lunch.votes + 1
       $addToSet:
         voters: user.username
-
-    console.log lunch.votes
 
     restaurant = Restaurants.findOne lunch.restaurantId
     if restaurant
