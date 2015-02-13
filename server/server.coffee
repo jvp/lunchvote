@@ -1,16 +1,6 @@
 fs = Npm.require('fs')
 meteor_root = process.env.PWD
 
-dateStamp = ->
- date = new Date()
- year = date.getFullYear()
- month = (1 + date.getMonth()).toString()
- month = month.length > 1 ? month : '0' + month
- day = date.getDate().toString()
- day = day.length > 1 ? day : '0' + day
- return year + '' + month + '' + day
-
-
 Meteor.methods
   getFiles: () ->
     console.log 'getFiles'
