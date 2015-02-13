@@ -26,19 +26,47 @@ Meteor.methods
       if restaurant
         restaurantId = restaurant._id
       else
+        console.log 'inserting: ' + restaurantName
         restaurantId = Restaurants.insert {name: restaurantName, votes: 0}
         restaurant = Restaurants.findOne restaurantId
 
-      Lunches.insert {
-        image: file,
-        voters: [],
-        date: new Date(),
-        votes: 0,
-        restaurantId: restaurantId,
-        restaurantName: restaurantName,
+      Lunches.insert
+        image: file
+        voters: []
+        date: new Date()
+        voted: false
+        votes: 0
+        restaurantId: restaurantId
+        restaurantName: restaurantName
         restaurantVotes: restaurant.votes
-      }
+
+  vote: (lunchId) ->
+    user = Meteor.user()
+    if !user
+      throw new Meteor.Error(401, "You need to login to upvote")
+
+    lunch = Lunches.findOne(lunchId)
+    if !lunch
+      throw new Meteor.Error(422, "Lunch not found")
+
+    console.log lunch.votes
+
+    lunch.$update
+      $set:
+        voted: true
+        votes: lunch.votes + 1
+      $addToSet:
+        voters: user.username
+
+    console.log lunch.votes
+
+    restaurant = Restaurants.findOne lunch.restaurantId
+    if restaurant
+      restaurant.$set {votes: restaurant.votes + 1}
+
 
 cron = new Meteor.Cron
-  events: { '*/15 * * * *': Meteor.call 'getFiles' }
+  events:
+    '* * * * *': =>
+      Meteor.call 'getFiles'
 

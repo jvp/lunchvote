@@ -2,10 +2,14 @@
   <div id="lunches">
     {{#each lunches}}
     <div class="lunch">
-      {{#if currentUser}}
-        <a href="#" class="upvote {{upvoteClass}}">▲</a>
+      {{#if votedToday}}
+        <img src="/images/{{image}}">
+      {{else}}
+        <a href="#" class="upvote">
+          <img src="/images/{{image}}">
+            </a>
       {{/if}}
-      <img src="/images/{{image}}">
+      {{ votes }}
     </div>
     {{else}}
     <p>d'oh, eihän täällä ole mitään äänestettävää</p>

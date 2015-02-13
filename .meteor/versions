@@ -11,6 +11,7 @@ boilerplate-generator@1.0.2
 callback-hook@1.0.2
 check@1.0.4
 coffeescript@1.0.5
+dburles:collection-helpers@1.0.2
 ddp@1.0.14
 deps@1.0.6
 ejson@1.0.5
@@ -34,6 +35,7 @@ iron:router@1.0.7
 iron:url@1.0.7
 jquery@1.11.3
 json@1.0.2
+lai:document-methods@0.1.0
 launch-screen@1.0.1
 livedata@1.0.12
 localstorage@1.0.2
