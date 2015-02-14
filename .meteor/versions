@@ -50,6 +50,7 @@ mrt:bootstrap-3@0.3.8
 mrt:cron@0.0.1
 mrt:jquery-imagesloaded@0.0.2
 mrt:jquery-masonry@0.1.0
+mrt:nprogress@0.1.0
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
 ordered-dict@1.0.2
@@ -59,9 +60,9 @@ reactive-var@1.0.4
 reload@1.1.2
 retry@1.0.2
 routepolicy@1.0.4
-sacha:spin@2.0.4
 service-configuration@1.0.3
 session@1.0.5
+settinghead:auto-nprogress@1.0.0
 sha@1.0.2
 spacebars@1.0.5
 spacebars-compiler@1.0.4

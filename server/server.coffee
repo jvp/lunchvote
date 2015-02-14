@@ -23,6 +23,7 @@ Meteor.methods
       Lunches.insert
         image: file
         voters: []
+        stars: []
         date: new Date()
         voted: false
         votes: 0
@@ -45,6 +46,7 @@ Meteor.methods
         votes: lunch.votes + 1
       $addToSet:
         voters: user.username
+        stars: '★'
 
     restaurant = Restaurants.findOne lunch.restaurantId
     if restaurant

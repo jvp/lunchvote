@@ -10,9 +10,9 @@ accounts-password
 underscore
 coffeescript
 iron:router
-sacha:spin
 mrt:cron
 mrt:jquery-masonry
 mrt:jquery-imagesloaded@0.0.2
 ian:accounts-ui-bootstrap-3
 lai:document-methods
+settinghead:auto-nprogress

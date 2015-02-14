@@ -1,3 +1,9 @@
+@media  {
+  .container {
+    width: 750px;
+  }
+}
+
 .main {
   background: #fff;
   border-radius: 3px;
@@ -7,7 +13,7 @@
 
 body {
   background: #eee;
-  color: #666666; }
+color: #666666; }
 
 #main {
   position: relative;
@@ -23,10 +29,10 @@ img {
 }
 
 .navbar {
-  margin-bottom: 10px; }
-  /* line 32, ../sass/style.scss */
-  .navbar .navbar-inner {
-  border-radius: 0px 0px 3px 3px; }
+margin-bottom: 10px; }
+/* line 32, ../sass/style.scss */
+.navbar .navbar-inner {
+border-radius: 0px 0px 3px 3px; }
 
 .lunch {
   width: 220px;
@@ -34,3 +40,8 @@ img {
   float: left;
 }
 
+.lunch img:hover {
+  -moz-box-shadow: 0 0 15px #ccc;
+  -webkit-box-shadow: 0 0 15px #ccc;
+  box-shadow: 0 0 15px #ccc;
+}
