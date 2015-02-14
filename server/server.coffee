@@ -1,7 +1,28 @@
 fs = Npm.require('fs')
 meteor_root = process.env.PWD
 
+Meteor.startup -> 
+  if Addresses.find().count() == 0
+    [
+      'http://lounaat.info/satakunnankatu-22-tampere'
+      'http://lounaat.info/satakunnansilta-tampere'
+      'http://lounaat.info/veturiaukio-4-tampere'
+    ].forEach (address) ->
+      Addresses.insert {url: address}
+
 Meteor.methods
+  runPhantom: (address) ->
+    spawn = Meteor.npmRequire('child_process').spawn
+    command = spawn('phantomjs', [meteor_root + '/private/ph.js', address ])
+    command.stdout.on('data', (data) ->
+      console.log 'stdout: ' + data
+    )
+    command.stderr.on('data', (data) ->
+      console.log 'stderr: ' + data
+    )
+    command.on('exit', (data) ->
+      console.log 'exited with: ' + data
+    )
   getFiles: () ->
     console.log 'getFiles'
     files = fs.readdirSync(meteor_root + '/public/images')
@@ -55,6 +76,9 @@ Meteor.methods
 
 cron = new Meteor.Cron
   events:
-    '* * * * *': =>
+    '0 7 * * *': =>
+      Addresses.find().forEach (address) ->
+        Meteor.call 'runPhantom', address.url
+    '10 7 * * *': =>
       Meteor.call 'getFiles'
 
