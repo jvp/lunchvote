@@ -8,3 +8,6 @@ Meteor.publish 'restaurants', ->
 
 Meteor.publish 'addresses', -> 
   return Addresses.find {}
+
+Meteor.publish 'images', -> 
+  return Images.find {}

@@ -13,19 +13,17 @@ Meteor.startup ->
 Meteor.methods
   runPhantom: (address) ->
     spawn = Meteor.npmRequire('child_process').spawn
-    command = spawn('phantomjs', [meteor_root + '/private/ph.js', address ])
-    command.stdout.on('data', (data) ->
-      console.log 'stdout: ' + data
-    )
-    command.stderr.on('data', (data) ->
-      console.log 'stderr: ' + data
-    )
-    command.on('exit', (data) ->
-      console.log 'exited with: ' + data
-    )
+    phantomjs = Meteor.npmRequire('phantomjs')
+    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/private/images/' ])
+    command.stdout.on 'data', (data) ->
+      #console.log('stdout: ' + data);
+    command.stderr.on 'data', (data) ->
+      throw new Error('stderr')
+    command.on 'exit', (data) ->
+      return
+
   getFiles: () ->
-    console.log 'getFiles'
-    files = fs.readdirSync(meteor_root + '/public/images')
+    files = fs.readdirSync(meteor_root + '/private/images/')
     files.forEach (file) ->
       return if !file.match(/\d{8}_.+\.png/)
       return if Lunches.findOne {image: file}
@@ -41,6 +39,8 @@ Meteor.methods
         restaurantId = Restaurants.insert {name: restaurantName, votes: 0}
         restaurant = Restaurants.findOne restaurantId
 
+      image = Images.insert meteor_root + '/private/images/' + file
+      
       Lunches.insert
         image: file
         voters: []
@@ -48,6 +48,7 @@ Meteor.methods
         date: new Date()
         voted: false
         votes: 0
+        imageId: image._id
         restaurantId: restaurantId
         restaurantName: restaurantName
         restaurantVotes: restaurant.votes
@@ -57,6 +58,7 @@ Meteor.methods
     if !user
       throw new Meteor.Error(401, "You need to login to upvote")
 
+      Meteor.call 'getFiles'
     lunch = Lunches.findOne(lunchId)
     if !lunch
       throw new Meteor.Error(422, "Lunch not found")
@@ -88,7 +90,7 @@ Meteor.methods
     Addresses.insert
       url: url
 
-  removeAddress: (id) ->
+  removeUrl: (id) ->
     user = Meteor.user()
     if !user
       throw new Meteor.Error(401, "You need to login to remove a url")
@@ -97,9 +99,12 @@ Meteor.methods
 
 cron = new Meteor.Cron
   events:
-    '0 7 * * *': =>
+    '0 6 * * *': () ->
       Addresses.find().forEach (address) ->
         Meteor.call 'runPhantom', address.url
-    '10 7 * * *': =>
+    '*/10 * * * *': () ->
       Meteor.call 'getFiles'
+
+
+
 

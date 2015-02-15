@@ -3,10 +3,10 @@
     {{#each lunches}}
     <div class="lunch">
       {{#if votedToday}}
-        <img src="/images/{{image}}">
+        <img src="{{image.url}}">
       {{else}}
         <a href="#" class="upvote">
-          <img src="/images/{{image}}">
+          <img src="{{image.url}}">
             </a>
       {{/if}}
       {{ stars }}

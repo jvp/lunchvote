@@ -5,6 +5,7 @@ Router.configure
       Meteor.subscribe 'lunches'
       Meteor.subscribe 'restaurants'
       Meteor.subscribe 'addresses'
+      Meteor.subscribe 'images'
     ]
 
 Router.map ->
