@@ -1,0 +1,16 @@
+<template name="addressList">
+  <form class="new-address">
+    <input type="text" name="text" placeholder="Add a new url">
+  </form>
+  <div id="addresses">
+    <ul>
+      {{#each addresses}}
+      <div class="address">
+        <button class="run">Fetch</button>
+        <button class="delete">&times;</button>
+        <li>{{url}}</li>
+      </div>
+      {{/each}}
+    </ul>
+  </div>
+</template>

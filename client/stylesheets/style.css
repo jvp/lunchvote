@@ -45,3 +45,35 @@ border-radius: 0px 0px 3px 3px; }
   -webkit-box-shadow: 0 0 15px #ccc;
   box-shadow: 0 0 15px #ccc;
 }
+
+form {
+  margin: 5px;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.run {
+  float: right;
+  font-weight: bold;
+  background: none;
+  font-size: 1em;
+  border: none;
+  position: relative;
+}
+
+.delete {
+  float: right;
+  font-weight: bold;
+  background: none;
+  font-size: 1em;
+  border: none;
+  position: relative;
+}
+
+li {
+  list-style: none;
+  padding: 5px;
+  border-bottom: #eee solid 1px;
+}

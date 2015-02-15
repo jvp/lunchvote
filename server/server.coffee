@@ -73,6 +73,27 @@ Meteor.methods
     if restaurant
       restaurant.$set {votes: restaurant.votes + 1}
 
+  addUrl: (url) ->
+    user = Meteor.user()
+    if !user
+      throw new Meteor.Error(401, "You need to login to add a url")
+
+    unless url.match(/http:\/\/lounaat.info\//)
+      throw new Meteor.Error(422, "Bad url")
+
+    address = Addresses.findOne {url: url}
+    if address
+      throw new Meteor.Error(422, "Url already found")
+
+    Addresses.insert
+      url: url
+
+  removeAddress: (id) ->
+    user = Meteor.user()
+    if !user
+      throw new Meteor.Error(401, "You need to login to remove a url")
+
+    Addresses.remove(id)
 
 cron = new Meteor.Cron
   events:

@@ -5,3 +5,6 @@ Meteor.publish 'lunches', ->
 
 Meteor.publish 'restaurants', -> 
   return Restaurants.find {}
+
+Meteor.publish 'addresses', -> 
+  return Addresses.find {}
