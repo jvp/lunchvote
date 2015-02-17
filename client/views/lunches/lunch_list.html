@@ -1,18 +1,31 @@
 <template name="lunchList">
-  <div id="lunches">
-    {{#each lunches}}
-    <div class="lunch">
-      {{#if votedToday}}
-        <img src="{{image.url}}">
-      {{else}}
-        <a href="#" class="upvote">
-          <img src="{{image.url}}">
-            </a>
-      {{/if}}
-      {{ stars }}
+<div class="row">
+  <div class="col-md-2 fixed">
+    <div id="results">
+      {{#each results}}
+        <div class="result-item">
+          <strong>{{restaurantName}}</strong>
+          {{voters}}
+        </div>
+      {{/each}}
     </div>
-    {{else}}
-    <p>d'oh, eihän täällä ole mitään äänestettävää</p>
-    {{/each}}
   </div>
+  <div class="col-md-10 scrollit">
+    <div id="lunches">
+      {{#each lunches}}
+      <div class="lunch">
+        {{#if votedToday}}
+          <img src="{{image.url}}">
+        {{else}}
+          <a href="#" class="upvote">
+            <img src="{{image.url}}">
+          </a>
+        {{/if}}
+      </div>
+      {{else}}
+      <p>d'oh, eihän täällä ole mitään äänestettävää</p>
+      {{/each}}
+    </div>
+  </div>
+</div>
 </template>

@@ -14,7 +14,7 @@ Meteor.methods
   runPhantom: (address) ->
     spawn = Meteor.npmRequire('child_process').spawn
     phantomjs = Meteor.npmRequire('phantomjs')
-    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/private/images/' ])
+    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/private/.images/' ])
     command.stdout.on 'data', (data) ->
       #console.log('stdout: ' + data);
     command.stderr.on 'data', (data) ->
@@ -23,7 +23,7 @@ Meteor.methods
       return
 
   getFiles: () ->
-    files = fs.readdirSync(meteor_root + '/private/images/')
+    files = fs.readdirSync(meteor_root + '/private/.images/')
     files.forEach (file) ->
       return if !file.match(/\d{8}_.+\.png/)
       return if Lunches.findOne {image: file}
@@ -39,7 +39,7 @@ Meteor.methods
         restaurantId = Restaurants.insert {name: restaurantName, votes: 0}
         restaurant = Restaurants.findOne restaurantId
 
-      image = Images.insert meteor_root + '/private/images/' + file
+      image = Images.insert meteor_root + '/private/.images/' + file
       
       Lunches.insert
         image: file
@@ -69,7 +69,7 @@ Meteor.methods
         votes: lunch.votes + 1
       $addToSet:
         voters: user.username
-        stars: '★'
+        #stars: '★'
 
     restaurant = Restaurants.findOne lunch.restaurantId
     if restaurant
@@ -99,10 +99,12 @@ Meteor.methods
 
 cron = new Meteor.Cron
   events:
-    '0 6 * * *': () ->
+    '0 7 * * *': () ->
+      console.log 'runPhantom'
       Addresses.find().forEach (address) ->
         Meteor.call 'runPhantom', address.url
-    '*/10 * * * *': () ->
+    '5 * * * *': () ->
+      console.log 'fetFiles'
       Meteor.call 'getFiles'
 
 

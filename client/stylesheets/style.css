@@ -1,7 +1,12 @@
-@media  {
-  .container {
-    width: 750px;
-  }
+.container {
+  margin-top: 70px;
+}
+
+.fixed {
+  position: fixed;
+}
+.scrollit {
+  float: right;
 }
 
 .main {
@@ -13,11 +18,12 @@
 
 body {
   background: #eee;
-color: #666666; }
+  color: #666666; }
 
 #main {
   position: relative;
 }
+
 .page {
   position: absolute;
   top: 0px;
@@ -35,7 +41,7 @@ margin-bottom: 10px; }
 border-radius: 0px 0px 3px 3px; }
 
 .lunch {
-  width: 220px;
+  width: 200px;
   margin: 10px;
   float: left;
 }
@@ -44,6 +50,14 @@ border-radius: 0px 0px 3px 3px; }
   -moz-box-shadow: 0 0 15px #ccc;
   -webkit-box-shadow: 0 0 15px #ccc;
   box-shadow: 0 0 15px #ccc;
+}
+
+#results {
+  margin-top: 5px;
+}
+
+.result-item {
+  margin-bottom: 10px;
 }
 
 form {

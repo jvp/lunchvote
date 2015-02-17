@@ -1,8 +1,10 @@
 Template.lunchList.helpers
   lunches: () ->
-    return Lunches.find {}, {sort: {votes: -1}}
+    return Lunches.find {}, {sort: {restaurantVotes: -1}}
   image: () ->
     return Images.findOne {_id: this.imageId}
+  results: () ->
+    return Lunches.find {voted: true}, {sort: {votes: -1}}
 
 Template.lunchList.rendered = ->
   $container = $('#lunches')
