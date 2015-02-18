@@ -59,7 +59,6 @@ Meteor.methods
     if !user
       throw new Meteor.Error(401, "You need to login to upvote")
 
-      Meteor.call 'getFiles'
     lunch = Lunches.findOne(lunchId)
     if !lunch
       throw new Meteor.Error(422, "Lunch not found")
