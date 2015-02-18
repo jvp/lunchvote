@@ -14,7 +14,7 @@ Meteor.methods
   runPhantom: (address) ->
     spawn = Meteor.npmRequire('child_process').spawn
     phantomjs = Meteor.npmRequire('phantomjs')
-    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/private/.images/' ])
+    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/images~/' ])
     command.stdout.on 'data', (data) ->
       #console.log('stdout: ' + data);
     command.stderr.on 'data', (data) ->
@@ -23,7 +23,7 @@ Meteor.methods
       return
 
   getFiles: () ->
-    files = fs.readdirSync(meteor_root + '/private/.images/')
+    files = fs.readdirSync(meteor_root + '/images~/')
     files.forEach (file) ->
       return if !file.match(/\d{8}_.+\.png/)
       return if Lunches.findOne {image: file}
@@ -39,7 +39,7 @@ Meteor.methods
         restaurantId = Restaurants.insert {name: restaurantName, votes: 0}
         restaurant = Restaurants.findOne restaurantId
 
-      image = Images.insert meteor_root + '/private/.images/' + file
+      image = Images.insert meteor_root + '/images~/' + file
       
       Lunches.insert
         image: file
@@ -52,6 +52,7 @@ Meteor.methods
         restaurantId: restaurantId
         restaurantName: restaurantName
         restaurantVotes: restaurant.votes
+        firstVote: null
 
   vote: (lunchId) ->
     user = Meteor.user()
@@ -67,6 +68,7 @@ Meteor.methods
       $set:
         voted: true
         votes: lunch.votes + 1
+        firstVote: if lunch.firstVote then lunch.firstVote else new Date()
       $addToSet:
         voters: user.username
         #stars: '★'
