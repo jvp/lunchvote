@@ -53,7 +53,6 @@ Meteor.methods
         restaurantName: restaurantName
         restaurantVotes: restaurant.votes
         firstVote: null
-        votable: Math.random() > 0.3
 
   vote: (lunchId) ->
     user = Meteor.user()
