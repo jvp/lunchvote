@@ -19,6 +19,8 @@ settinghead:auto-nprogress
 meteorhacks:npm
 
 
-npm-container
 cfs:filesystem
 cfs:standard-packages
+
+
+npm-container
