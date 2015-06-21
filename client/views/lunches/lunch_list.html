@@ -15,16 +15,16 @@
       {{#each lunches}}
       <div class="lunch">
         <img src="{{image.url}}">
-        {{#if currentUser}}
         <div class='like-bar'>
-          {{#unless votedToday}}
-            <a href='#' class='upvote'>
-              <i class='fa fa-heart-o'></i>
-            </a>
-          {{/unless}}
           <span class='label label-danger'>{{restaurantVotes}}</span>
+          {{#if currentUser}}
+            {{#unless votedToday}}
+              <a href='#' class='upvote'>
+                <i class='fa fa-heart-o'></i>
+              </a>
+            {{/unless}}
+          {{/if}}
         </div>
-        {{/if}}
       </div>
       {{else}}
         <img src="images/homer.jpg">
