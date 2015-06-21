@@ -79,6 +79,7 @@ Meteor.methods
       $set:
         voted: true
         votes: lunch.votes + 1
+        restaurantVotes: lunch.restaurantVotes + 1
         firstVote: if lunch.firstVote then lunch.firstVote else new Date()
       $addToSet:
         voters: user.username
@@ -92,7 +93,6 @@ Meteor.methods
     Addresses.find().fetch().forEach (address) ->
       allAddresses = allAddresses + address.url + ','
 
-    console.log allAddresses
     command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', allAddresses, meteor_root + '/images~/' ])
     command.stdout.on 'data', (data) ->
       #console.log('stdout: ' + data);

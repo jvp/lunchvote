@@ -3,10 +3,10 @@
   <div class="col-md-2 fixed">
     <div id="results">
       {{#each results}}
-        <div class="result-item">
-          <strong>{{restaurantName}}</strong><br/>
-          {{voters}}
-        </div>
+      <div class="result-item">
+        <strong>{{restaurantName}}</strong><br/>
+        {{voters}}
+      </div>
       {{/each}}
     </div>
   </div>
@@ -14,12 +14,16 @@
     <div id="lunches">
       {{#each lunches}}
       <div class="lunch">
-        {{#if votedToday}}
-          <img src="{{image.url}}">
-        {{else}}
-          <a href="#" class="upvote">
-            <img src="{{image.url}}">
-          </a>
+        <img src="{{image.url}}">
+        {{#if currentUser}}
+        <div class='like-bar'>
+          {{#unless votedToday}}
+            <a href='#' class='upvote'>
+              <i class='fa fa-heart-o'></i>
+            </a>
+          {{/unless}}
+          <span class='label label-danger'>{{restaurantVotes}}</span>
+        </div>
         {{/if}}
       </div>
       {{else}}
