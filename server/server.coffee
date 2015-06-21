@@ -57,7 +57,7 @@ Meteor.methods
   removeFiles: () ->
     files = fs.readdirSync(meteor_root + '/images~/')
     files.forEach (file) ->
-      console.log 'removing: ' + restaurantName
+      console.log 'removing: ' + file
       command = spawn('rm', [meteor_root + '/images~/' + file])
       command.stdout.on 'data', (data) ->
         #console.log('stdout: ' + data);
