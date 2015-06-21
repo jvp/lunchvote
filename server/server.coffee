@@ -13,16 +13,7 @@ Meteor.startup ->
       Addresses.insert {url: address}
 
 Meteor.methods
-  runPhantom: (address) ->
-    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/images~/' ])
-    command.stdout.on 'data', (data) ->
-      #console.log('stdout: ' + data);
-    command.stderr.on 'data', (data) ->
-      throw new Error('stderr')
-    command.on 'exit', (data) ->
-      return
-
-  getFiles: () ->
+  importImages: () ->
     files = fs.readdirSync(meteor_root + '/images~/')
     files.forEach (file) ->
       return if !file.match(/\d{8}_.+\.png/)
@@ -48,7 +39,7 @@ Meteor.methods
         command.stderr.on 'data', (data) ->
           throw new Error('stderr')
         command.on 'exit', (data) ->
-          #console.log('child process exited with code ' + code);
+          return
       
       Lunches.insert
         image: file
@@ -63,6 +54,18 @@ Meteor.methods
         restaurantVotes: restaurant.votes
         firstVote: null
 
+  removeFiles: () ->
+    files = fs.readdirSync(meteor_root + '/images~/')
+    files.forEach (file) ->
+      console.log 'removing: ' + restaurantName
+      command = spawn('rm', [meteor_root + '/images~/' + file])
+      command.stdout.on 'data', (data) ->
+        #console.log('stdout: ' + data);
+      command.stderr.on 'data', (data) ->
+        throw new Error('stderr')
+      command.on 'exit', (data) ->
+        return
+      
   vote: (lunchId) ->
     user = Meteor.user()
     if !user
@@ -84,23 +87,47 @@ Meteor.methods
     if restaurant
       restaurant.$set {votes: restaurant.votes + 1}
 
-  dropImages: ->
+  getFiles: ->
+    allAddresses = ''
+    Addresses.find().fetch().forEach (address) ->
+      allAddresses = allAddresses + address.url + ','
+
+    console.log allAddresses
+    command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', allAddresses, meteor_root + '/images~/' ])
+    command.stdout.on 'data', (data) ->
+      #console.log('stdout: ' + data);
+    command.stderr.on 'data', (data) ->
+      throw new Error('stderr')
+    command.on 'exit', (data) ->
+      return
+
+  removeImages: ->
     today = new Date()
     today.setHours(0,0,0,0)
     images = Images.remove {uploadedAt: {$lte: today}}
 
+  removeLunches: ->
+    today = new Date()
+    today.setHours(0,0,0,0)
+    images = Lunches.remove {date: {$lte: today}}
+
 cron = new Meteor.Cron
   events:
     '0 7 * * *': () ->
-      console.log 'runPhantom'
-      Addresses.find().forEach (address) ->
-        Meteor.call 'runPhantom', address.url
-    '5 * * * *': () ->
       console.log 'getFiles'
       Meteor.call 'getFiles'
-    '1 0 * * *': () ->
-      console.log 'dropImages'
-      Meteor.call 'dropImages'
+    '10 7 * * *': () ->
+      console.log 'importImages'
+      Meteor.call 'importImages'
+    '5 0 * * *': () ->
+      console.log 'removeFiles'
+      Meteor.call 'removeFiles'
+    '10 0 * * *': () ->
+      console.log 'removeImages'
+      Meteor.call 'removeImages'
+    '15 0 * * *': () ->
+      console.log 'removeLunches'
+      Meteor.call 'removeLunches'
 
 
 

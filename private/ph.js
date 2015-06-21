@@ -1,8 +1,8 @@
 var system = require('system');
 var args = system.args;
-var page = require('webpage').create();
 var path = args[2];
 var address = args[1];
+var addresses = address.split(',');
 
 var dateStamp = function(){
   var date = new Date();
@@ -14,7 +14,8 @@ var dateStamp = function(){
   return year + '' + month + '' + day;
 };
 
-function handle_page(address, path){
+function handle_page(address, path, callback){
+  var page = require('webpage').create();
   page.open(address, function (status) {
     if (status !== 'success') {
       console.log('Unable to access the network!');
@@ -43,7 +44,23 @@ function handle_page(address, path){
       }
       page.render(path + dateStamp() + "_" + title + '.png');
     }
-    return phantom.exit(0);
+    page.close();
+    callback.apply();
   });
 }
-handle_page(address, path);
+
+function process() {
+  if (addresses.length > 0) {
+    var address = addresses[0];
+    addresses.splice(0, 1);
+    console.log(address);
+    if (address.length > 0) {
+      handle_page(address, path, process);
+    }
+  } else {
+    console.log('exit');
+    return phantom.exit();
+  }
+}
+
+process();
