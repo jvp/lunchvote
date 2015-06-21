@@ -10,4 +10,3 @@ Router.configure
 
 Router.map ->
   @route 'lunchList', path: '/'
-  @route 'addressList', path: '/urls'

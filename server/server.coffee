@@ -1,5 +1,7 @@
 fs = Npm.require('fs')
 meteor_root = process.env.PWD
+phantomjs = Meteor.npmRequire('phantomjs')
+spawn = Meteor.npmRequire('child_process').spawn
 
 Meteor.startup -> 
   if Addresses.find().count() == 0
@@ -12,8 +14,6 @@ Meteor.startup ->
 
 Meteor.methods
   runPhantom: (address) ->
-    spawn = Meteor.npmRequire('child_process').spawn
-    phantomjs = Meteor.npmRequire('phantomjs')
     command = spawn(phantomjs.path, [meteor_root + '/private/ph.js', address, meteor_root + '/images~/' ])
     command.stdout.on 'data', (data) ->
       #console.log('stdout: ' + data);
@@ -40,6 +40,15 @@ Meteor.methods
         restaurant = Restaurants.findOne restaurantId
 
       image = Images.insert meteor_root + '/images~/' + file
+      if image
+        console.log 'inserting: ' + restaurantName
+        command = spawn('rm', [meteor_root + '/images~/' + file])
+        command.stdout.on 'data', (data) ->
+          #console.log('stdout: ' + data);
+        command.stderr.on 'data', (data) ->
+          throw new Error('stderr')
+        command.on 'exit', (data) ->
+          #console.log('child process exited with code ' + code);
       
       Lunches.insert
         image: file
@@ -70,33 +79,15 @@ Meteor.methods
         firstVote: if lunch.firstVote then lunch.firstVote else new Date()
       $addToSet:
         voters: user.username
-        #stars: '★'
 
     restaurant = Restaurants.findOne lunch.restaurantId
     if restaurant
       restaurant.$set {votes: restaurant.votes + 1}
 
-  addUrl: (url) ->
-    user = Meteor.user()
-    if !user
-      throw new Meteor.Error(401, "You need to login to add a url")
-
-    unless url.match(/http:\/\/lounaat.info\//)
-      throw new Meteor.Error(422, "Bad url")
-
-    address = Addresses.findOne {url: url}
-    if address
-      throw new Meteor.Error(422, "Url already found")
-
-    Addresses.insert
-      url: url
-
-  removeUrl: (id) ->
-    user = Meteor.user()
-    if !user
-      throw new Meteor.Error(401, "You need to login to remove a url")
-
-    Addresses.remove(id)
+  dropImages: ->
+    today = new Date()
+    today.setHours(0,0,0,0)
+    images = Images.remove {uploadedAt: {$lte: today}}
 
 cron = new Meteor.Cron
   events:
@@ -107,6 +98,9 @@ cron = new Meteor.Cron
     '5 * * * *': () ->
       console.log 'getFiles'
       Meteor.call 'getFiles'
+    '1 0 * * *': () ->
+      console.log 'dropImages'
+      Meteor.call 'dropImages'
 
 
 
