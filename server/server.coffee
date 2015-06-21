@@ -41,7 +41,7 @@ Meteor.methods
 
       image = Images.insert meteor_root + '/images~/' + file
       if image
-        console.log 'inserting: ' + restaurantName
+        console.log 'removing: ' + restaurantName
         command = spawn('rm', [meteor_root + '/images~/' + file])
         command.stdout.on 'data', (data) ->
           #console.log('stdout: ' + data);
