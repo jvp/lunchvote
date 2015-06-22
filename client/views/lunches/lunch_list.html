@@ -4,7 +4,15 @@
     <div id="results">
       {{#each results}}
       <div class="result-item">
-        <strong>{{restaurantName}}</strong><br/>
+        <strong>{{restaurantName}}</strong>
+        {{#if currentUser}}
+          {{#unless votedToday}}
+            <a href='#' class='upvote'>
+              <i class='fa fa-thumbs-o-up'></i>
+            </a>
+          {{/unless}}
+        {{/if}}
+        <br>
         {{voters}}
       </div>
       {{/each}}
