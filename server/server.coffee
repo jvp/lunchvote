@@ -57,6 +57,7 @@ Meteor.methods
   removeFiles: () ->
     files = fs.readdirSync(meteor_root + '/images~/')
     files.forEach (file) ->
+      return if !file.match(/\d{8}_.+\.png/)
       console.log 'removing: ' + file
       command = spawn('rm', [meteor_root + '/images~/' + file])
       command.stdout.on 'data', (data) ->
@@ -79,7 +80,6 @@ Meteor.methods
       $set:
         voted: true
         votes: lunch.votes + 1
-        restaurantVotes: lunch.restaurantVotes + 1
         firstVote: if lunch.firstVote then lunch.firstVote else new Date()
       $addToSet:
         voters: user.username

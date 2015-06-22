@@ -1,6 +1,6 @@
 <template name="lunchList">
 <div class="row">
-  <div class="col-md-2 fixed">
+  <div class="col-xs-2 col-md-2 fixed">
     <div id="results">
       {{#each results}}
       <div class="result-item">
@@ -10,12 +10,13 @@
       {{/each}}
     </div>
   </div>
-  <div class="col-md-10 scrollit">
+  <div class="col-xs-10 col-md-10 scrollit">
     <div id="lunches">
       {{#each lunches}}
       <div class="lunch">
         <img src="{{image.url}}">
         <div class='like-bar'>
+          <span class='label label-info'>{{votes}}</span>
           <span class='label label-danger'>{{restaurantVotes}}</span>
           {{#if currentUser}}
             {{#unless votedToday}}
