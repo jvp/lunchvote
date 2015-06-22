@@ -65,7 +65,7 @@ Meteor.methods
       command.stderr.on 'data', (data) ->
         throw new Error('stderr')
       command.on 'exit', (data) ->
-        return
+        return 'exit'
       
   vote: (lunchId) ->
     user = Meteor.user()
@@ -99,7 +99,7 @@ Meteor.methods
     command.stderr.on 'data', (data) ->
       throw new Error('stderr')
     command.on 'exit', (data) ->
-      return
+      return 'exit'
 
   removeImages: ->
     today = new Date()
