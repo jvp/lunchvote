@@ -42,7 +42,8 @@ border-radius: 0px 0px 3px 3px; }
 
 .lunch {
   width: 200px;
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   float: left;
 }
 
