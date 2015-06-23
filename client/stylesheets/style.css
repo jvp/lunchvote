@@ -46,6 +46,13 @@ border-radius: 0px 0px 3px 3px; }
   float: left;
 }
 
+.lunch-restaurant-name {
+  font-size: 10px;
+  float: right;
+  color: gray;
+  font-style: italic;
+}
+
 #results {
   margin-top: 5px;
 }
