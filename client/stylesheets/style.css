@@ -2,13 +2,6 @@
   margin-top: 70px;
 }
 
-.fixed {
-  position: fixed;
-}
-.scrollit {
-  float: right;
-}
-
 .main {
   background: #fff;
   border-radius: 3px;
@@ -40,6 +33,26 @@ margin-bottom: 10px; }
 .navbar .navbar-inner {
 border-radius: 0px 0px 3px 3px; }
 
+.result-item-left {
+  float: left;
+}
+
+.result-item-right {
+  padding-left: 5px;
+  float: left;
+}
+
+.result-item {
+  margin-left: 10px;
+  margin-right: 10px;
+  float: left;
+  min-width: 100px;
+}
+
+.lunches-row {
+  margin-top: 50px:
+}
+
 .lunch {
   width: 200px;
   margin-left: 10px;
@@ -50,6 +63,12 @@ border-radius: 0px 0px 3px 3px; }
 .lunch-restaurant-name {
   font-size: 10px;
   float: right;
+  color: gray;
+  font-style: italic;
+}
+
+.result-voters {
+  font-size: 12px;
   color: gray;
   font-style: italic;
 }

@@ -1,45 +1,52 @@
 <template name="lunchList">
-<div class="row">
-  <div class="col-xs-2 col-md-2 fixed">
-    <div id="results">
-      {{#each results}}
-      <div class="result-item">
-        <strong>{{restaurantName}}</strong>
-        {{#if currentUser}}
-          {{#unless votedToday}}
-            <a href='#' class='upvote'>
-              <i class='fa fa-thumbs-o-up'></i>
-            </a>
-          {{/unless}}
-        {{/if}}
-        <br>
-        {{voters}}
-      </div>
-      {{/each}}
-    </div>
-  </div>
-  <div class="col-xs-10 col-md-10 scrollit">
-    <div id="lunches">
-      {{#each lunches}}
-      <div class="lunch">
-        <span class="lunch-restaurant-name">{{restaurantName}}</span>
-        <img src="{{image.url}}">
-        <div class='like-bar'>
-          <span class='label label-info'>{{votes}}</span>
-          <span class='label label-danger'>{{restaurantVotes}}</span>
-          {{#if currentUser}}
-            {{#unless votedToday}}
-              <a href='#' class='upvote'>
-                <i class='fa fa-thumbs-o-up'></i>
-              </a>
-            {{/unless}}
-          {{/if}}
+  <div class="row results-row">
+    <div class="col-xs-12 col-md-12">
+      <div id="results">
+        {{#each results}}
+        <div class="result-item">
+          <div class="result-item-left">
+            <i class="fa fa-trophy"></i>
+          </div>
+          <div class="result-item-right">
+            <strong>{{restaurantName}}</strong>
+            {{#if currentUser}}
+              {{#unless votedToday}}
+                <a href='#' class='upvote'>
+                  <i class='fa fa-thumbs-o-up'></i>
+                </a>
+              {{/unless}}
+            {{/if}}
+            <br/>
+          <span class="result-voters">{{voters}}</span>
+          </div>
         </div>
+        {{/each}}
       </div>
-      {{else}}
-        <img src="images/homer.jpg">
-      {{/each}}
     </div>
   </div>
-</div>
+  <div class="row lunches-row">
+    <div class="col-xs-12 col-md-12">
+      <div id="lunches">
+        {{#each lunches}}
+        <div class="lunch">
+          <span class="lunch-restaurant-name">{{restaurantName}}</span>
+          <img src="{{image.url}}">
+          <div class='like-bar'>
+            <span class='label label-info'>{{votes}}</span>
+            <span class='label label-danger'>{{restaurantVotes}}</span>
+            {{#if currentUser}}
+              {{#unless votedToday}}
+                <a href='#' class='upvote'>
+                  <i class='fa fa-thumbs-o-up'></i>
+                </a>
+              {{/unless}}
+            {{/if}}
+          </div>
+        </div>
+        {{else}}
+          <img src="images/homer.jpg">
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </template>
