@@ -1,6 +1,6 @@
 <template name="lunchList">
   <div class="row results-row">
-    <div class="col-xs-12 col-md-12">
+    <div class="col-xs-6 col-md-6">
       <div id="results">
         {{#each results}}
         <div class="result-item">
@@ -23,30 +23,49 @@
         {{/each}}
       </div>
     </div>
+    <div class="col-xs-3 col-sm-3">
+      <form id="restaurantSearch" role="form">
+        <div class="form-group">
+          <input type="text" name="text" placeholder="Etsi" class="form-control" id="pwd">
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-4 col-sm-3">
+      {{#if currentUser}}
+      {{#unless votedToday}}
+      <div class="random-vote" >
+        <button type="button" id="random-vote" class="btn btn-default">Random ääni</button>
+      </div>
+      {{/unless}}
+      {{/if}}
+    </div>
   </div>
   <div class="row lunches-row">
     <div class="col-xs-12 col-md-12">
       <div id="lunches">
         {{#each lunches}}
-        <div class="lunch">
-          <span class="lunch-restaurant-name">{{restaurantName}}</span>
-          <img src="{{image.url}}">
-          <div class='like-bar'>
-            <span class='label label-info'>{{votes}}</span>
-            <span class='label label-danger'>{{restaurantVotes}}</span>
-            {{#if currentUser}}
-              {{#unless votedToday}}
-                <a href='#' class='upvote'>
-                  <i class='fa fa-thumbs-o-up'></i>
-                </a>
-              {{/unless}}
-            {{/if}}
-          </div>
-        </div>
+          {{> lunchItem}}
         {{else}}
           <img src="images/homer.jpg">
         {{/each}}
       </div>
+    </div>
+  </div>
+</template>
+
+<template name="lunchItem">
+<div class="lunch {{searchStatus}}">
+    <img src="{{image.url}}">
+    <div class='like-bar'>
+      <span class='label label-info'>{{votes}}</span>
+      <span class='label label-danger'>{{restaurantVotes}}</span>
+      {{#if currentUser}}
+      {{#unless votedToday}}
+      <a href='#' class='upvote'>
+        <i class='fa fa-thumbs-o-up'></i>
+      </a>
+      {{/unless}}
+      {{/if}}
     </div>
   </div>
 </template>

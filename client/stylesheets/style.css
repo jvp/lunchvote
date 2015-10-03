@@ -43,8 +43,8 @@ border-radius: 0px 0px 3px 3px; }
 }
 
 .result-item {
-  margin-left: 10px;
-  margin-right: 10px;
+  padding: 5px;
+  margin: 5px;
   float: left;
   min-width: 100px;
 }
@@ -55,9 +55,13 @@ border-radius: 0px 0px 3px 3px; }
 
 .lunch {
   width: 200px;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding: 5px;
+  margin: 5px;
   float: left;
+}
+
+#random-vote {
+  margin: 5px;
 }
 
 .lunch-restaurant-name {
@@ -74,11 +78,14 @@ border-radius: 0px 0px 3px 3px; }
 }
 
 #results {
-  margin-top: 5px;
 }
 
 .result-item {
   margin-bottom: 10px;
+}
+
+.searchResult {
+  background-color: gold;
 }
 
 form {
