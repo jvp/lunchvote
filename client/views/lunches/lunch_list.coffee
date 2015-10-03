@@ -4,7 +4,7 @@ Template.lunchList.helpers
   image: () ->
     return Images.findOne {_id: this.imageId}
   results: () ->
-    return Lunches.find {voted: true}, {sort: {votes: -1, firstVote: 1}}
+    return Lunches.find {voted: true}, {sort: {votes: -1, restaurantVotes: 1}}
   votedToday: () ->
     user = Meteor.user()
     if user && !_.include(votersToday(), user.username)
