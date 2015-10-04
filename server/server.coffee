@@ -67,6 +67,11 @@ Meteor.methods
         throw new Error('stderr')
       command.on 'exit', (data) ->
         return 'exit'
+
+  randomVote: () ->
+    lunches = Lunches.find({restaurantVotes: {$gt: 0}}).fetch()
+    randomVote = _.shuffle(lunches)[0]
+    Meteor.call('vote', randomVote._id)
       
   vote: (lunchId) ->
     user = Meteor.user()

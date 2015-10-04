@@ -55,9 +55,7 @@ Template.lunchList.events
 
    'click #random-vote': (e) ->
       e.preventDefault()
-      lunches = Lunches.find().fetch()
-      randomVote = _.shuffle(lunches)[0]
-      Meteor.call('vote', randomVote._id)
+      Meteor.call('randomVote')
 
 @votersToday = ->
   lunches = Lunches.find {voted: true}
