@@ -26,3 +26,5 @@ cfs:standard-packages
 npm-container
 msavin:mongol
 natestrauser:font-awesome
+mfpierre:chartist-js
+momentjs:moment

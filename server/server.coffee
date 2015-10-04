@@ -27,7 +27,7 @@ Meteor.methods
         restaurantId = restaurant._id
       else
         console.log 'inserting: ' + restaurantName
-        restaurantId = Restaurants.insert {name: restaurantName, votes: 0}
+        restaurantId = Restaurants.insert {name: restaurantName, votes: 0, score: 0, lastVote: null}
         restaurant = Restaurants.findOne restaurantId
 
       image = Images.insert meteor_root + '/images~/' + file
@@ -52,6 +52,7 @@ Meteor.methods
         restaurantId: restaurantId
         restaurantName: restaurantName
         restaurantVotes: restaurant.votes
+        restaurantScore: restaurant.score
         firstVote: null
 
   removeFiles: () ->
@@ -86,7 +87,9 @@ Meteor.methods
 
     restaurant = Restaurants.findOne lunch.restaurantId
     if restaurant
-      restaurant.$set {votes: restaurant.votes + 1}
+      restaurant.$set
+        votes: restaurant.votes + 1
+        lastVote: new Date()
 
   getFiles: ->
     allAddresses = ''
@@ -113,6 +116,9 @@ Meteor.methods
 
 cron = new Meteor.Cron
   events:
+    '0 1 * * *': () ->
+      console.log 'udpating scores'
+      Meteor.call 'updateScores'
     '0 7 * * *': () ->
       console.log 'getFiles'
       Meteor.call 'getFiles'
@@ -130,5 +136,38 @@ cron = new Meteor.Cron
       Meteor.call 'removeLunches'
 
 
+Meteor.methods
+  'lastVote': (restaurantId) ->
+    restaurant = Restaurants.findOne {_id: restaurantId }
+    if restaurant == undefined
+      return
 
+    if restaurant.lastVote == null || restaurant.lastVote == undefined
+      return
 
+    lastVoteTime = moment(restaurant.lastVote)
+    now = moment(new Date())
+    now.diff(lastVoteTime, 'days')
+
+  'calculateScore': (restaurantId) ->
+    restaurant = Restaurants.findOne(restaurantId)
+    if !restaurant
+      return
+
+    # Score = (P-1) / (T+2)^G
+    votes = restaurant.votes
+    daysFromLastVote = Meteor.call('lastVote', restaurantId)
+
+    if daysFromLastVote == undefined
+      return votes * 0.0001
+
+    votes / Math.pow((daysFromLastVote+2), 1.8)
+
+  'updateScores': () ->
+    restaurants = Restaurants.find()
+    restaurants.map (restaurant) ->
+      score = Meteor.call('calculateScore', restaurant._id)
+      console.log 'updating ' + restaurant.name + " -- " + score
+      restaurant.$update
+        $set:
+          score: score

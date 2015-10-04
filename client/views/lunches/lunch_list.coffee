@@ -1,6 +1,6 @@
 Template.lunchList.helpers
   lunches: () ->
-    return Lunches.find {}, {sort: {restaurantVotes: -1}}
+    return Lunches.find {}, {sort: {restaurantScore: -1}}
   image: () ->
     return Images.findOne {_id: this.imageId}
   results: () ->
