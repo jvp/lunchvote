@@ -70,7 +70,6 @@ Meteor.methods
 
   randomVote: () ->
     lunches = Lunches.find({voted: true}).fetch()
-    console.log lunches
     randomVote = _.shuffle(lunches)[0]
     Meteor.call('vote', randomVote._id)
       

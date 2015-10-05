@@ -50,9 +50,9 @@ Template.lunchList.events
     Session.set("searchText", text)
     e.target.text.value = ''
 
-   'click #random-vote': (e) ->
-      e.preventDefault()
-      Meteor.call('randomVote')
+ 'click #random-vote': (e) ->
+    e.preventDefault()
+    Meteor.call('randomVote')
 
 @votersToday = ->
   lunches = Lunches.find {voted: true}
