@@ -69,7 +69,8 @@ Meteor.methods
         return 'exit'
 
   randomVote: () ->
-    lunches = Lunches.find({restaurantVotes: {$gt: 0}}).fetch()
+    lunches = Lunches.find({voted: true}).fetch()
+    console.log lunches
     randomVote = _.shuffle(lunches)[0]
     Meteor.call('vote', randomVote._id)
       

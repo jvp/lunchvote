@@ -11,6 +11,9 @@ Template.lunchList.helpers
       return false
     else
       return true
+  randomVote: () ->
+    lunches = Lunches.find({voted: true}).fetch()
+    lunches.length >= 2 ? true : false
 
 Template.lunchItem.helpers
   image: () ->
@@ -35,12 +38,6 @@ Template.lunchList.rendered = ->
   $container.imagesLoaded(
     -> $container.masonry { itemSelector: '.lunch', isAnimated: true }
   )
-
-  ###
-Template.lunchItem.rendered = ->
-  this.autorun = ->
-    search_text = Session.get('searchText')
-    ###
 
 Template.lunchList.events
   'click .upvote': (e) ->
