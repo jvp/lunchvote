@@ -1,8 +1,6 @@
 Template.lunchList.helpers
   lunches: () ->
     return Lunches.find {}, {sort: {restaurantScore: -1}}
-  image: () ->
-    return Images.findOne {_id: this.imageId}
   results: () ->
     return Lunches.find {voted: true}, {sort: {votes: -1, restaurantVotes: 1}}
   votedToday: () ->
@@ -15,9 +13,7 @@ Template.lunchList.helpers
     lunches = Lunches.find({voted: true}).fetch()
     lunches.length >= 2 ? true : false
 
-Template.lunchItem.helpers
-  image: () ->
-    return Images.findOne {_id: this.imageId}
+Template.lunch.helpers
   searchStatus: () ->
     searchTerm = Session.get('searchText')
     if searchTerm == undefined || searchTerm == ''
@@ -32,12 +28,8 @@ Template.lunchItem.helpers
       return false
     else
       return true
-
-Template.lunchList.rendered = ->
-  $container = $('#lunches')
-  $container.imagesLoaded(
-    -> $container.masonry { itemSelector: '.lunch', isAnimated: true }
-  )
+  has_lunch_items: () ->
+    this.lunchItems.length() == 0 ? false : true
 
 Template.lunchList.events
   'click .upvote': (e) ->

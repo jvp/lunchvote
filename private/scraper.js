@@ -29,28 +29,34 @@ function handle_page(address, path, callback){
       return document.querySelectorAll('.isotope-item');
     });
 
-    var lunchList = [];
+    var lunchObjects = {};
     for(var i = 0; i < lunches.length; i++) {
       console.log(i);
       lunch = page.evaluate(function (i) { 
         var lunch = {};
-        var elem = document.querySelectorAll('.isotope-item')[i];
-        var title = elem.innerText.split('\n')[0].replace(/ /g,"_");
+        var elem = document.querySelectorAll('.menu.isotope-item')[i];
+        if (!elem) {
+          return null;
+        }
+        var title = elem.querySelector('.item-header h3').innerText
+        console.log(title);
 
-        lunch[title] = [];
+        lunch['title'] = title
+        lunch['lunches'] = []
         var menuItems = elem.querySelectorAll('.menu-item');
         for(var j = 0; j < menuItems.length; ++j) {
           var lunchItem = menuItems[j];
-          lunch[title].push(lunchItem.innerText);
+          lunch['lunches'].push(lunchItem.innerText)
         }
         return lunch;
       }, i);
-      if (lunch['title'] === '_') {
+      if (!lunch || lunch['title'] === '_') {
         continue;
       }
-      lunchList.push(lunch);
+      console.log(lunch['title']);
+      lunchObjects[lunch['title']] = lunch['lunches']
     }
-    fs.write('../images~/' + dateStamp() + '.txt', JSON.stringify(lunchList), 'w');
+    fs.write('../images~/' + dateStamp() + '.txt', JSON.stringify(lunchObjects), 'w');
     page.close();
     callback.apply();
   });

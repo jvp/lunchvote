@@ -1,64 +1,28 @@
 <template name="lunchList">
-  <div class="row results-row">
-    <div class="col-xs-6 col-md-6">
-      <div id="results">
-        {{#each results}}
-        <div class="result-item">
-          <div class="result-item-left">
-            <i class="fa fa-trophy"></i>
-          </div>
-          <div class="result-item-right">
-            <strong>{{restaurantName}}</strong>
-            {{#if currentUser}}
-              {{#unless votedToday}}
-                <a href='#' class='upvote'>
-                  <i class='fa fa-thumbs-o-up'></i>
-                </a>
-              {{/unless}}
-            {{/if}}
-            <br/>
-          <span class="result-voters">{{voters}}</span>
-          </div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    <div class="col-xs-3 col-sm-3">
-      <form id="restaurantSearch" role="form">
-        <div class="form-group">
-          <input type="text" name="text" placeholder="Haku" class="form-control" id="pwd">
-        </div>
-      </form>
-    </div>
-    <div class="col-xs-4 col-sm-3">
-      {{#if currentUser}}
-      {{#unless votedToday}}
-      {{#if randomVote}}
-      <div class="random-vote" >
-        <button type="button" id="random-vote" class="btn btn-default">Random</button>
-      </div>
-      {{/if}}
-      {{/unless}}
-      {{/if}}
+<div class="row lunches-row">
+  <div class="col-xs-2 col-md-2">
+  </div>
+  <div class="col-xs-8 col-md-8">
+    <div id="lunches">
+      {{#each lunches}}
+      {{> lunch}}
+      {{else}}
+      <img src="images/homer.jpg">
+      {{/each}}
     </div>
   </div>
-  <div class="row lunches-row">
-    <div class="col-xs-12 col-md-12">
-      <div id="lunches">
-        {{#each lunches}}
-          {{> lunchItem}}
-        {{else}}
-          <img src="images/homer.jpg">
-        {{/each}}
-      </div>
-    </div>
+  <div class="col-xs-2 col-md-2">
   </div>
+</div>
 </template>
 
-<template name="lunchItem">
+<template name="lunch">
 <div class="lunch {{searchStatus}}">
-    <img src="{{image.url}}">
-    <div class='like-bar'>
+  <div class='lunch-header'>
+    <div class="lunch-details">
+      <p>{{restaurantName}}</p>
+    </div>
+    <div class="lunch-votes">
       <span class='label label-info'>{{votes}}</span>
       <span class='label label-danger'>{{restaurantVotes}}</span>
       {{#if currentUser}}
@@ -70,4 +34,13 @@
       {{/if}}
     </div>
   </div>
+  <div class='lunch-main'>
+    <ul>
+      {{#each lunchItems}}
+      <li class="lunch-item">{{.}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
 </template>
+
