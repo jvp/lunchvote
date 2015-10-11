@@ -1,7 +1,8 @@
-.container {
-  margin-top: 70px;
+@media (min-width: 1200px) {
+  .container{
+    max-width: 970px;
+  }
 }
-
 .main {
   background: #fff;
   border-radius: 3px;
@@ -11,7 +12,7 @@
 
 body {
   background: #eee;
-  color: #666666; }
+color: #666666; }
 
 #main {
   position: relative;
@@ -28,10 +29,15 @@ img {
 }
 
 .navbar {
-margin-bottom: 10px; }
+margin-bottom: 5px; }
 /* line 32, ../sass/style.scss */
 .navbar .navbar-inner {
 border-radius: 0px 0px 3px 3px; }
+
+.lunches{
+  margin: auto;
+  width: 98%;
+}
 
 .lunches-row {
   margin-top: 50px:
@@ -44,22 +50,48 @@ border-radius: 0px 0px 3px 3px; }
 }
 
 .lunch-header {
-  height: 40px;
+  height: 50px;
 }
 
 .lunch-main{
   padding-left: 10px;
 }
 
-.lunch-details {
-  font-weight: bold;
-  width: 90%;
-  float: left;
+.lunch-vote {
+  padding: 5px;
+  float: right;
+  font-size: 20px;
 }
 
-.lunch-votes {
-  width: 10%;
+.fa.votable{
+  font-size: 20px;
+}
+
+.fa.not-votable{
+  font-size: 20px;
+  color: gray;
+}
+
+.lunch-details {
   float: left;
+  padding: 5px;
+}
+
+h3#restaurant-title {
+  font-size: 18px;
+  margin: 0px;
+}
+
+p#restaurant-info {
+  font-style: italic;
+  font-size: 10px;
+  margin: 5px;
+}
+
+.lunch-stats {
+  padding: 5px;
+  float: left;
+  font-size: 18px;
 }
 
 .restaurant-name {

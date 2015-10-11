@@ -1,8 +1,6 @@
 Template.lunchList.helpers
   lunches: () ->
-    return Lunches.find {}, {sort: {restaurantScore: -1}}
-  results: () ->
-    return Lunches.find {voted: true}, {sort: {votes: -1, restaurantVotes: 1}}
+    return Lunches.find {}, {sort: {votes: -1, restaurantScore: -1}}
   votedToday: () ->
     user = Meteor.user()
     if user && !_.include(votersToday(), user.username)
@@ -28,8 +26,11 @@ Template.lunch.helpers
       return false
     else
       return true
-  has_lunch_items: () ->
-    this.lunchItems.length() == 0 ? false : true
+  voters_list: () ->
+    if this.voters.length > 0
+      return "Tänään #{this.voters}"
+    else
+      return ''
 
 Template.lunchList.events
   'click .upvote': (e) ->

@@ -1,17 +1,11 @@
 <template name="lunchList">
 <div class="row lunches-row">
-  <div class="col-xs-2 col-md-2">
-  </div>
-  <div class="col-xs-8 col-md-8">
-    <div id="lunches">
-      {{#each lunches}}
+  <div class="lunches">
+    {{#each lunches}}
       {{> lunch}}
-      {{else}}
-      <img src="images/homer.jpg">
-      {{/each}}
-    </div>
-  </div>
-  <div class="col-xs-2 col-md-2">
+    {{else}}
+    <img src="images/homer.jpg">
+    {{/each}}
   </div>
 </div>
 </template>
@@ -19,18 +13,20 @@
 <template name="lunch">
 <div class="lunch {{searchStatus}}">
   <div class='lunch-header'>
-    <div class="lunch-details">
-      <p>{{restaurantName}}</p>
-    </div>
-    <div class="lunch-votes">
+    <div class="lunch-stats">
       <span class='label label-info'>{{votes}}</span>
-      <span class='label label-danger'>{{restaurantVotes}}</span>
+    </div>
+    <div class="lunch-details">
+      <h3 id="restaurant-title">{{restaurantName}}</h3>
+      <p id="restaurant-info">Yht. {{restaurantVotes}} ääntä. {{voters_list}}</p>
+    </div>
+    <div class="lunch-vote">
       {{#if currentUser}}
-      {{#unless votedToday}}
-      <a href='#' class='upvote'>
-        <i class='fa fa-thumbs-o-up'></i>
-      </a>
-      {{/unless}}
+        {{#unless votedToday}}
+          <a href='#' class='upvote'>
+            <i class='fa fa-thumbs-o-up votable'></i>
+          </a>
+        {{/unless}}
       {{/if}}
     </div>
   </div>
