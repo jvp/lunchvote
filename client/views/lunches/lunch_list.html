@@ -4,21 +4,23 @@
     {{#each lunches}}
       {{> lunch}}
     {{else}}
-    <img src="images/homer.jpg">
+    <div id="no-lunches">
+      <img src="images/homer.jpg">
+    </div>
     {{/each}}
   </div>
 </div>
 </template>
 
 <template name="lunch">
-<div class="lunch {{searchStatus}}">
+<div class="lunch {{winnerClass}}">
   <div class='lunch-header'>
     <div class="lunch-stats">
       <span class='label label-info'>{{votes}}</span>
     </div>
     <div class="lunch-details">
       <h3 id="restaurant-title">{{restaurantName}}</h3>
-      <p id="restaurant-info">Yht. {{restaurantVotes}} ääntä. {{voters_list}}</p>
+      <p id="restaurant-info">Yht. {{restaurantVotes}} ääntä. {{votersList}}</p>
     </div>
     <div class="lunch-vote">
       {{#if currentUser}}

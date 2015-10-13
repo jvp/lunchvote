@@ -56,7 +56,9 @@ function handle_page(address, path, callback){
       console.log(lunch['title']);
       lunchObjects[lunch['title']] = lunch['lunches']
     }
-    fs.write('../images~/' + dateStamp() + '.txt', JSON.stringify(lunchObjects), 'w');
+
+    console.log('../images~/' + dateStamp() + '_' + hashCode(address) + '.txt');
+    fs.write('../images~/' + dateStamp() + '_' + hashCode(address) + '.txt', JSON.stringify(lunchObjects), 'w');
     page.close();
     callback.apply();
   });
@@ -74,6 +76,10 @@ function process() {
     console.log('exit');
     return phantom.exit();
   }
+}
+
+function hashCode(s){
+  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
 }
 
 process();
