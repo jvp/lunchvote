@@ -57,8 +57,8 @@ function handle_page(address, path, callback){
       lunchObjects[lunch['title']] = lunch['lunches']
     }
 
-    console.log('../images~/' + dateStamp() + '_' + hashCode(address) + '.txt');
-    fs.write('../images~/' + dateStamp() + '_' + hashCode(address) + '.txt', JSON.stringify(lunchObjects), 'w');
+    console.log(path + dateStamp() + '_' + hashCode(address) + '.txt');
+    fs.write(path + dateStamp() + '_' + hashCode(address) + '.txt', JSON.stringify(lunchObjects), 'w');
     page.close();
     callback.apply();
   });
