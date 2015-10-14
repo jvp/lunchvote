@@ -3,7 +3,7 @@ Template.lunchList.helpers
     searchText = Session.get('searchText')
     if searchText && searchText != ''
       searchQuery = new RegExp(searchText, "i")
-      return Lunches.find {restaurantName: {$regex: searchQuery}}, {sort: {votes: -1, restaurantScore: -1}}
+      return Lunches.find {$or: [{restaurantName: {$regex: searchQuery}}, {lunchItemsString: {$regex: searchQuery}}]}, {sort: {votes: -1, restaurantScore: -1}}
     else
       return Lunches.find {}, {sort: {votes: -1, restaurantScore: -1}}
   votedToday: () ->
@@ -26,8 +26,8 @@ Template.lunch.helpers
     else
       return ''
   winnerClass: () ->
-    winnerId = winner()._id
-    if winnerId && winnerId == this._id
+    winner = getWinner()
+    if winner && winner._id == this._id
       return 'winner'
     else
       return ''
@@ -43,5 +43,5 @@ Template.lunchList.events
   votersToday.push.apply(votersToday, lunches.map (lunch) -> lunch.voters)
   return _.flatten(votersToday)
 
-@winner = ->
+@getWinner = ->
   Lunches.find({voted: true}, {sort: {votes: -1, restaurantScore: -1}, limit: 1}).fetch()[0]

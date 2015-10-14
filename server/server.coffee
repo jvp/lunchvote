@@ -27,6 +27,7 @@ Meteor.methods
         restaurantName = restaurant
         console.log restaurantName
         lunchItems = lunches[restaurant]
+        lunchItemsString = lunchItems.join ''
         restaurant = Restaurants.findOne {name: restaurantName}
 
         if restaurant
@@ -50,6 +51,7 @@ Meteor.methods
               restaurantVotes: restaurant.votes
               restaurantScore: restaurant.score
               lunchItems: lunchItems
+              lunchItemsString: lunchItemsString
      
   removeFiles: () ->
     files = fs.readdirSync(meteor_root + '/images~/')
