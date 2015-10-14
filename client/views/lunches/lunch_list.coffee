@@ -35,6 +35,8 @@ Template.lunch.helpers
 Template.lunchList.events
   'click .upvote': (e) ->
     e.preventDefault()
+    rxFavico.set 'type', "info"
+    rxFavico.set 'count', votesToday() + 1
     Meteor.call('vote', this._id)
 
 @votersToday = ->
@@ -42,6 +44,9 @@ Template.lunchList.events
   votersToday = []
   votersToday.push.apply(votersToday, lunches.map (lunch) -> lunch.voters)
   return _.flatten(votersToday)
+
+@votesToday = ->
+  votersToday().length
 
 @getWinner = ->
   Lunches.find({voted: true}, {sort: {votes: -1, restaurantScore: -1}, limit: 1}).fetch()[0]

@@ -82,6 +82,7 @@ npm-bcrypt@0.7.8_2
 npm-container@1.0.0
 observe-sequence@1.0.6
 ordered-dict@1.0.3
+pierreeric:rxfavico@0.3.5_1
 raix:eventemitter@0.1.2
 random@1.0.3
 reactive-dict@1.1.0
