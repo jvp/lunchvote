@@ -39,6 +39,11 @@ Template.lunchList.events
     rxFavico.set 'count', votesToday() + 1
     Meteor.call('vote', this._id)
 
+Template.lunchList.created = ->
+  rxFavico.set 'type', "info"
+  rxFavico.set 'count', votesToday()
+
+
 @votersToday = ->
   lunches = Lunches.find {voted: true}
   votersToday = []
