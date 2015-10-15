@@ -35,13 +35,13 @@ Template.lunch.helpers
 Template.lunchList.events
   'click .upvote': (e) ->
     e.preventDefault()
-    rxFavico.set 'type', "info"
-    rxFavico.set 'count', votesToday() + 1
     Meteor.call('vote', this._id)
 
 Template.lunchList.created = ->
-  rxFavico.set 'type', "info"
-  rxFavico.set 'count', votesToday()
+  this.autorun () ->
+    count = votesToday()
+    rxFavico.set 'type', "info"
+    rxFavico.set 'count', count
 
 
 @votersToday = ->
