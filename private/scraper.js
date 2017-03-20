@@ -17,6 +17,7 @@ var dateStamp = function(){
 
 function handle_page(address, path, callback){
   var page = require('webpage').create();
+  page.customHeaders = { "Cookie": "showempty_v2=%22yes%22" }
   var fs = require('fs');
 
   page.open(address, function (status) {
@@ -25,14 +26,14 @@ function handle_page(address, path, callback){
       return phantom.exit(1);
     }
 
-    var lunches = page.evaluate(function () { 
+    var lunches = page.evaluate(function () {
       return document.querySelectorAll('.isotope-item');
     });
 
     var lunchObjects = {};
     for(var i = 0; i < lunches.length; i++) {
       console.log(i);
-      lunch = page.evaluate(function (i) { 
+      lunch = page.evaluate(function (i) {
         var lunch = {};
         var elem = document.querySelectorAll('.menu.isotope-item')[i];
         if (!elem) {
@@ -79,7 +80,7 @@ function process() {
 }
 
 function hashCode(s){
-  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
 }
 
 process();

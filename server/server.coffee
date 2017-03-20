@@ -3,12 +3,13 @@ meteor_root = process.env.PWD
 phantomjs = Meteor.npmRequire('phantomjs')
 spawn = Meteor.npmRequire('child_process').spawn
 
-Meteor.startup -> 
+Meteor.startup ->
   if Addresses.find().count() == 0
     [
       'http://lounaat.info/satakunnankatu-22-tampere'
       'http://lounaat.info/satakunnansilta-tampere'
       'http://lounaat.info/veturiaukio-4-tampere'
+      'https://www.lounaat.info/hameenkatu-tampere'
     ].forEach (address) ->
       Addresses.insert {url: address}
 
@@ -36,7 +37,7 @@ Meteor.methods
           console.log 'inserting: ' + restaurantName
           restaurantId = Restaurants.insert {name: restaurantName, votes: 0, score: 0, lastVote: null}
           restaurant = Restaurants.findOne restaurantId
-        
+
         Lunches.upsert
             restaurantId: restaurantId
           ,
@@ -52,7 +53,7 @@ Meteor.methods
               restaurantScore: restaurant.score
               lunchItems: lunchItems
               lunchItemsString: lunchItemsString
-     
+
   removeFiles: () ->
     files = fs.readdirSync(meteor_root + '/images~/')
     files.forEach (file) ->
