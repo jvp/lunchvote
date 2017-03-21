@@ -35,7 +35,13 @@
   <div class='lunch-main'>
     <ul>
       {{#each lunchItems}}
-      <li class="lunch-item">{{.}}</li>
+        {{#if url}}
+          <li class="lunch-item">
+            <a target="_blank" href="{{url}}">{{title}}</a>
+          </li>
+        {{else}}
+          <li class="lunch-item">{{title}}</li>
+        {{/if}}
       {{/each}}
     </ul>
   </div>

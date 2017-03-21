@@ -44,10 +44,10 @@ function handle_page(address, path, callback){
 
         lunch['title'] = title
         lunch['lunches'] = []
-        var menuItems = elem.querySelectorAll('.menu-item');
+        var menuItems = elem.querySelectorAll('.menu-item, .missing');
         for(var j = 0; j < menuItems.length; ++j) {
           var lunchItem = menuItems[j];
-          lunch['lunches'].push(lunchItem.innerText)
+          lunch['lunches'].push({title: lunchItem.innerText, url: lunchItem.getAttribute("href")})
         }
         return lunch;
       }, i);
