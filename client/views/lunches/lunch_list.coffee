@@ -22,7 +22,7 @@ Template.lunch.helpers
       return true
   votersList: () ->
     if this.voters.length > 0
-      return "Tänään #{this.voters}"
+      return "#{this.voters}"
     else
       return ''
   winnerClass: () ->

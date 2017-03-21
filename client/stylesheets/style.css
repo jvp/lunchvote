@@ -57,12 +57,13 @@ border-radius: 0px 0px 3px 3px; }
 }
 
 .lunch-header {
-  height: 50px;
+  overflow: auto;
 }
 
 .lunch-main{
-  padding-left: 10px;
-  padding-bottom: 5px;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-bottom: 10px;
 }
 
 .lunch-vote {
@@ -83,6 +84,13 @@ border-radius: 0px 0px 3px 3px; }
 .lunch-details {
   float: left;
   padding: 5px;
+  padding-top: 10px;
+}
+
+.lunch-voters{
+  float: left;
+  padding: 5px;
+  padding-top: 10px;
 }
 
 h3#restaurant-title {
