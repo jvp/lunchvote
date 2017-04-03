@@ -13,6 +13,10 @@ Meteor.startup ->
     ].forEach (address) ->
       Addresses.insert {url: address}
 
+Accounts.onLogin (userObject) ->
+  console.log userObject.user.username + " logged in"
+
+
 Meteor.methods
   readFiles: () ->
     files = fs.readdirSync(meteor_root + '/images~/')
@@ -162,7 +166,6 @@ Meteor.methods
       restaurant.$update
         $set:
           score: score
-
 
 @dateStamp = () ->
   date = new Date()
