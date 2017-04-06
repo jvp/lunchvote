@@ -139,7 +139,7 @@ cron = new Meteor.Cron
       console.log 'removeLunches'
       Meteor.call 'removeLunches'
     '20 7 * * Thu': () ->
-      console.log 'removeLunches'
+      console.log 'voteForChicken'
       Meteor.call 'voteForChicken'
 
 Meteor.methods
