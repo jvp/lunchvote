@@ -71,8 +71,9 @@ Meteor.methods
       command.on 'exit', (data) ->
         return 'exit'
 
-  vote: (lunchId) ->
-    user = Meteor.user()
+  vote: (lunchId, voter) ->
+    user = voter || Meteor.user()
+
     if !user
       throw new Meteor.Error(401, "You need to login to upvote")
 
@@ -101,7 +102,7 @@ Meteor.methods
 
     command = spawn(phantomjs.path, [meteor_root + '/private/scraper.js', allAddresses, meteor_root + '/images~/' ])
     command.stdout.on 'data', (data) ->
-      console.log('stdout: ' + data);
+      console.log('stdout: ' + data)
     command.stderr.on 'data', (data) ->
       throw new Error('stderr')
     command.on 'exit', (data) ->
@@ -112,6 +113,13 @@ Meteor.methods
     today = new Date()
     today.setHours(0,0,0,0)
     images = Lunches.remove {date: {$lte: today}}
+
+  voteForChicken: ->
+    lunch = Lunches.findOne {restaurantName: 'Katmandu'}
+    hpoUser = Meteor.users.findOne {username: 'hpo'}
+
+    if lunch && hpoUser
+      Meteor.call 'vote', lunch._id, hpoUser
 
 cron = new Meteor.Cron
   events:
@@ -130,6 +138,9 @@ cron = new Meteor.Cron
     '15 0 * * *': () ->
       console.log 'removeLunches'
       Meteor.call 'removeLunches'
+    '20 7 * * Thu': () ->
+      console.log 'removeLunches'
+      Meteor.call 'voteForChicken'
 
 Meteor.methods
   'lastVote': (restaurantId) ->
